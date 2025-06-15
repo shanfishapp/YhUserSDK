@@ -239,10 +239,11 @@ class Admin(BaseAPIClient):
             await logger.error(f"踢出请求出错: {str(e)}")
             return {"code": -1, "msg": str(e)}
 class Tag(BaseAPIClient):
-    async def edit(group, id, msg, color="#2196F3", desc=None, sort=0):
+    @require_token
+    async def edit(self, group, id, msg, color="#2196F3", desc=None, sort=0):
         try:
             response = await requests.post(
-                url="https://chat-go.jwzhd.com/v1/group/remove-member",
+                url="https://chat-go.jwzhd.com/v1/group-tag/edit",
                 headers={
                     "User-Agent": "windows 1.5.47",
                     "Accept": "application/x-protobuf",
@@ -252,17 +253,77 @@ class Tag(BaseAPIClient):
                     "token": self.token
                 },
                 data=json.dumps({
-                    "groupId": group_id,
-                    "userId": user_id
+                    "id": id,
+                    "groupId": group,
+                    "tag": msg,
+                    "color": color,
+                    "desc": desc,
+                    "sort": sort
                 })
             )
             
             if response['code'] != 1:
-                await logger.error(f"踢出失败：{response['msg']}({response['code']})")
+                await logger.error(f"编辑标签组失败：{response['msg']}({response['code']})")
             else:
-                await logger.info(f"已成功编辑 {group} 群的标签 {id}")
+                await logger.info(f"已成功编辑 {group} 群的标签 {id} 为 {msg}")
             return response
                 
+        except Exception as e:
+            await logger.error(f"编辑标签组请求出错: {str(e)}")
+            return {"code": -1, "msg": str(e
+    @require_token
+    async def add(self, group, msg, color="#2196F3", desc=None, sort=0):
+        try:
+            response = await requests.post(
+                url="https://chat-go.jwzhd.com/v1/group-tag/create",
+                headers={
+                    "User-Agent": "windows 1.5.47",
+                    "Accept": "application/x-protobuf",
+                    "Accept-Encoding": "gzip",
+                    "Host": "yhchat.hqycloud.top",
+                    "Content-Type": "application/x-protobuf",
+                    "token": self.token
+                },
+                data=json.dumps({
+                    "groupId": group,
+                    "tag": msg,
+                    "color": color,
+                    "desc": desc,
+                    "sort": sort
+                })
+            )
+            
+            if response['code'] != 1:
+                await logger.error(f"创建标签组失败：{response['msg']}({response['code']})")
+            else:
+                await logger.info(f"已成功设置 {group} 群的标签{msg}")
+            return response
+        except Exception as e:
+            await logger.error(f"编辑标签组请求出错: {str(e)}")
+            return {"code": -1, "msg": str(e)}
+    @require_token
+    async def rm(self, id):
+        try:
+            response = await requests.post(
+                url="https://chat-go.jwzhd.com/v1/group-tag/delete",
+                headers={
+                    "User-Agent": "windows 1.5.47",
+                    "Accept": "application/x-protobuf",
+                    "Accept-Encoding": "gzip",
+                    "Host": "yhchat.hqycloud.top",
+                    "Content-Type": "application/x-protobuf",
+                    "token": self.token
+                },
+                data=json.dumps({
+                    "id": id
+                })
+            )
+            
+            if response['code'] != 1:
+                await logger.error(f"删除标签组失败：{response['msg']}({response['code']})")
+            else:
+                await logger.info(f"已成功删除标签 {id}")
+            return response
         except Exception as e:
             await logger.error(f"编辑标签组请求出错: {str(e)}")
             return {"code": -1, "msg": str(e)}

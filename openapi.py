@@ -325,5 +325,31 @@ class Tag(BaseAPIClient):
                 await logger.info(f"已成功删除标签 {id}")
             return response
         except Exception as e:
-            await logger.error(f"编辑标签组请求出错: {str(e)}")
+            await logger.error(f"删除标签组请求出错: {str(e)}")
+            return {"code": -1, "msg": str(e)}
+    @require_token
+    async def get(self, group):
+        try:
+            response = await requests.post(
+                url="https://chat-go.jwzhd.com/v1/group-tag/list",
+                headers={
+                    "User-Agent": "windows 1.5.47",
+                    "Accept": "application/x-protobuf",
+                    "Accept-Encoding": "gzip",
+                    "Host": "yhchat.hqycloud.top",
+                    "Content-Type": "application/x-protobuf",
+                    "token": self.token
+                },
+                data=json.dumps({
+                    "groupId": group
+                })
+            )
+            
+            if response['code'] != 1:
+                await logger.error(f"获取标签组失败：{response['msg']}({response['code']})")
+            else:
+                await logger.info(f"已成功获取标签 {id}")
+            return response
+        except Exception as e:
+            await logger.error(f"获取标签组请求出错: {str(e)}")
             return {"code": -1, "msg": str(e)}

@@ -1,6 +1,6 @@
 import requests
 import os
-from logger import logger
+from .logger import logger
 
 class api:
     # 环境变量配置
@@ -194,6 +194,32 @@ class api:
                 "tagGroupId": tag_id
             }
             return api._make_request(url, data, "设置用户标签")
+    class join:
+        @classmethod
+        def join_requests(cls, type, id, msg):
+            url = api.base_url + "/friend/apply"
+            data = {
+                "chatId": id,
+                "chatType": type,
+                "remark": msg
+            }
+            if type == 1:
+                title = "用户"
+            elif type == 2:
+                title = "群聊",
+            else:
+                title = "机器人"
+            return api._make_request(url, data, f"添加{title}")
+        @classmethod
+        def user(cls, id, msg=""):
+            return cls.join_requests(1, id, msg)
+        @classmethod
+        def group(cls, id, msg=""):
+            return cls.join_requests(2, id, msg)
+        @classmethod
+        def bot(cls, id, msg=""):
+            return cls.join_requests(3, id, msg)
+        
 
 # 初始化API模块（自动加载环境变量中的token）
 api.initialize()

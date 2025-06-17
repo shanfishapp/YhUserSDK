@@ -103,13 +103,13 @@ class api:
     @classmethod
     def ban_request(cls, user_id, group_id, time):
         """禁言请求方法"""
-        allow_time = ["10", "1h", "6h", "12h", "0"]
+        allow_time = [600, 3600, 21600, 43200, 0]
         if time not in allow_time:
             return {'success': False, 'code': -4, 'message': f"不支持的时间: {time}", 'data': None}
         
-        url = cls.base_url + "/group/gag_member"
-        data = {"groupId": group_id, "userId": user_id, "time": time}
-        action = "取消禁言" if time == "0" else "禁言"
+        url = cls.base_url + "/group/gag-member"
+        data = {"groupId": group_id, "userId": user_id, "gap": time}
+        action = "取消禁言" if time == 0 else "禁言"
         return cls._make_request(url, data, action)
 
     @classmethod

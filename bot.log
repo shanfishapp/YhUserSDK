@@ -1,0 +1,186 @@
+[INFO][2025-06-18 12:50:43]登录成功
+[INFO][2025-06-18 12:50:43]Token已保存到环境变量
+[WARN][2025-06-18 12:50:43]添加标签组失败: 创建失败，该标签已存在 (代码: -1)
+[INFO][2025-06-18 12:51:26]登录成功
+[INFO][2025-06-18 12:51:26]Token已保存到环境变量
+[INFO][2025-06-18 12:51:31]添加标签组成功
+[INFO][2025-06-18 13:18:39]登录成功
+[INFO][2025-06-18 13:18:39]Token已加密保存
+[INFO][2025-06-18 13:18:39]登录成功！Token已保存
+[ERROR][2025-06-18 13:18:40]添加标签组请求异常: Expecting value: line 1 column 1 (char 0)
+[ERROR][2025-06-18 13:18:44]添加标签组请求异常: Expecting value: line 1 column 1 (char 0)
+[INFO][2025-06-18 13:23:17]Token已保存到环境变量
+[INFO][2025-06-18 13:29:16]Token已保存到环境变量
+[ERROR][2025-06-18 13:29:17]禁言网络错误：Expecting value: line 1 column 1 (char 0)
+[INFO][2025-06-18 13:30:04]Token已保存到环境变量
+[ERROR][2025-06-18 13:30:04]禁言网络错误：Expecting value: line 1 column 1 (char 0)
+[INFO][2025-06-18 13:39:46]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:39:47]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:39:47]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:39:47]令牌已加密存储
+[INFO][2025-06-18 13:39:47]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP2", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:39:47]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:39:47]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:39:47]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag_member 参数: {"groupId": 632128613, "userId": 3707697, "time": "10"}
+[INFO][2025-06-18 13:39:48]响应状态[禁言]: 200
+[ERROR][2025-06-18 13:39:48]网络错误[禁言]: Expecting value: line 1 column 1 (char 0)
+[ERROR][2025-06-18 13:41:48]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:41:48]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:41:48]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:41:49]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:41:49]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:41:49]令牌已加密存储
+[INFO][2025-06-18 13:41:49]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP2", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:41:49]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:41:49]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:41:49]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": 632128613, "userId": 3707697, "gag": "10"}
+[INFO][2025-06-18 13:41:50]响应状态[禁言]: 400
+[INFO][2025-06-18 13:41:50]业务响应[禁言]: {"code": 1100, "message": "请求参数错误", "data": null}
+[ERROR][2025-06-18 13:44:43]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:44:43]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:44:43]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:44:43]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:44:43]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:44:43]令牌已加密存储
+[INFO][2025-06-18 13:44:43]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP2", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:44:44]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:44:44]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:44:44]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": 632128613, "userId": 3707697, "gag": 600}
+[INFO][2025-06-18 13:44:44]响应状态[禁言]: 400
+[INFO][2025-06-18 13:44:44]业务响应[禁言]: {"code": 1100, "message": "请求参数错误", "data": null}
+[ERROR][2025-06-18 13:45:09]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:45:09]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:45:09]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:45:10]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:45:10]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:45:10]令牌已加密存储
+[INFO][2025-06-18 13:45:10]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP2", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:45:10]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:45:10]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:45:10]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:45:10]响应状态[禁言]: 200
+[INFO][2025-06-18 13:45:10]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:45:57]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:45:57]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:45:57]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:45:57]令牌已加密存储
+[INFO][2025-06-18 13:45:57]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP2", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:45:58]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:45:58]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:45:58]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:45:58]响应状态[禁言]: 200
+[INFO][2025-06-18 13:45:58]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[ERROR][2025-06-18 13:46:06]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:46:06]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:46:06]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:46:07]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:46:07]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:46:07]令牌已加密存储
+[INFO][2025-06-18 13:46:07]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP2", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:46:07]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:46:07]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:46:07]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:46:07]响应状态[禁言]: 200
+[INFO][2025-06-18 13:46:07]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[ERROR][2025-06-18 13:49:46]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:49:46]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:49:46]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:49:46]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:49:46]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:49:46]令牌已加密存储
+[INFO][2025-06-18 13:49:46]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:49:47]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:49:47]业务响应[创建标签]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:49:47]请求[获取标签列表]: https://chat-go.jwzhd.com/v1/group-tag/list 参数: {"groupId": "632128613"}
+[INFO][2025-06-18 13:49:47]响应状态[获取标签列表]: 200
+[INFO][2025-06-18 13:49:47]业务响应[获取标签列表]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:49:47]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:49:47]响应状态[禁言]: 200
+[INFO][2025-06-18 13:49:47]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[ERROR][2025-06-18 13:50:29]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:50:29]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:50:29]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:50:30]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:50:30]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:50:30]令牌已加密存储
+[INFO][2025-06-18 13:50:30]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:50:31]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:50:31]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:50:31]请求[获取标签列表]: https://chat-go.jwzhd.com/v1/group-tag/list 参数: {"groupId": "632128613"}
+[INFO][2025-06-18 13:50:31]响应状态[获取标签列表]: 200
+[INFO][2025-06-18 13:50:31]业务响应[获取标签列表]: {"code": 1, "message": "success", "data": "..."}
+[ERROR][2025-06-18 13:50:56]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:50:56]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:50:56]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:50:57]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:50:57]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:50:57]令牌已加密存储
+[INFO][2025-06-18 13:50:57]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:50:58]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:50:58]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:50:58]请求[获取标签列表]: https://chat-go.jwzhd.com/v1/group-tag/list 参数: {"groupId": "632128613"}
+[INFO][2025-06-18 13:50:58]响应状态[获取标签列表]: 200
+[INFO][2025-06-18 13:50:58]业务响应[获取标签列表]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:50:58]请求[删除标签]: https://chat-go.jwzhd.com/v1/group-tag/delete 参数: {"id": 1489}
+[INFO][2025-06-18 13:50:58]响应状态[删除标签]: 200
+[INFO][2025-06-18 13:50:58]业务响应[删除标签]: {"code": -1, "message": "该用户不在群聊中", "data": null}
+[INFO][2025-06-18 13:50:58]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:50:59]响应状态[禁言]: 200
+[INFO][2025-06-18 13:50:59]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[ERROR][2025-06-18 13:51:43]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:51:43]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:51:43]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:51:44]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:51:44]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:51:44]令牌已加密存储
+[INFO][2025-06-18 13:51:44]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:51:44]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:51:44]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:51:44]请求[获取标签列表]: https://chat-go.jwzhd.com/v1/group-tag/list 参数: {"groupId": "632128613"}
+[INFO][2025-06-18 13:51:44]响应状态[获取标签列表]: 200
+[INFO][2025-06-18 13:51:44]业务响应[获取标签列表]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:51:44]请求[删除标签]: https://chat-go.jwzhd.com/v1/group-tag/delete 参数: {"id": 1498}
+[INFO][2025-06-18 13:51:45]响应状态[删除标签]: 200
+[INFO][2025-06-18 13:51:45]业务响应[删除标签]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:51:45]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:51:45]响应状态[禁言]: 200
+[INFO][2025-06-18 13:51:45]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[ERROR][2025-06-18 13:52:11]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:52:11]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:52:11]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:52:11]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:52:11]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:52:12]令牌已加密存储
+[INFO][2025-06-18 13:52:12]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:52:12]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:52:12]业务响应[创建标签]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:52:12]请求[获取标签列表]: https://chat-go.jwzhd.com/v1/group-tag/list 参数: {"groupId": "632128613"}
+[INFO][2025-06-18 13:52:12]响应状态[获取标签列表]: 200
+[INFO][2025-06-18 13:52:12]业务响应[获取标签列表]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:52:12]请求[删除标签]: https://chat-go.jwzhd.com/v1/group-tag/delete 参数: {"id": 1498}
+[INFO][2025-06-18 13:52:13]响应状态[删除标签]: 200
+[INFO][2025-06-18 13:52:13]业务响应[删除标签]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:52:13]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:52:13]响应状态[禁言]: 200
+[INFO][2025-06-18 13:52:13]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[ERROR][2025-06-18 13:52:54]令牌解密失败: MAC check failed
+[WARN][2025-06-18 13:52:54]令牌解密失败: 无效的加密令牌，尝试从环境变量加载
+[INFO][2025-06-18 13:52:54]请求[用户登录]: https://chat-go.jwzhd.com/v1/user/email-login 参数: {"email": "zcsfish@qq.com", "password": "******", "deviceId": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0", "platform": "windows"}
+[INFO][2025-06-18 13:52:55]响应状态[用户登录]: 200
+[INFO][2025-06-18 13:52:55]业务响应[用户登录]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:52:55]令牌已加密存储
+[INFO][2025-06-18 13:52:55]请求[创建标签]: https://chat-go.jwzhd.com/v1/group-tag/create 参数: {"groupId": "632128613", "tag": "VIP", "color": "#2196F3", "desc": "", "sort": 0}
+[INFO][2025-06-18 13:52:55]响应状态[创建标签]: 200
+[INFO][2025-06-18 13:52:55]业务响应[创建标签]: {"code": -1, "message": "创建失败，该标签已存在", "data": null}
+[INFO][2025-06-18 13:52:55]请求[获取标签列表]: https://chat-go.jwzhd.com/v1/group-tag/list 参数: {"groupId": "632128613"}
+[INFO][2025-06-18 13:52:56]响应状态[获取标签列表]: 200
+[INFO][2025-06-18 13:52:56]业务响应[获取标签列表]: {"code": 1, "message": "success", "data": "..."}
+[INFO][2025-06-18 13:52:56]请求[删除标签]: https://chat-go.jwzhd.com/v1/group-tag/delete 参数: {"id": 1498}
+[INFO][2025-06-18 13:52:56]响应状态[删除标签]: 200
+[INFO][2025-06-18 13:52:56]业务响应[删除标签]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:52:56]请求[禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 600}
+[INFO][2025-06-18 13:52:56]响应状态[禁言]: 200
+[INFO][2025-06-18 13:52:56]业务响应[禁言]: {"code": 1, "message": "success", "data": null}
+[INFO][2025-06-18 13:52:56]请求[取消禁言]: https://chat-go.jwzhd.com/v1/group/gag-member 参数: {"groupId": "632128613", "userId": "3707697", "gag": 0}
+[INFO][2025-06-18 13:52:57]响应状态[取消禁言]: 200
+[INFO][2025-06-18 13:52:57]业务响应[取消禁言]: {"code": 1, "message": "success", "data": null}

@@ -1,12 +1,24 @@
 import requests
 import os
+import json
+import base64
+from Crypto.Cipher import AES
+from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Random import get_random_bytes
 from .logger import logger
 
 class api:
-    # 环境变量配置
-    TOKEN_ENV_VAR = "CHAT_API_TOKEN"  # 存储token的环境变量名
+    # 配置项
+    TOKEN_ENV_VAR = "CHAT_API_TOKEN"  # 环境变量名
+    TOKEN_FILE = "api_token.enc"      # 加密令牌存储文件
+    SALT_FILE = "api_token.salt"      # 加密盐值文件
     
-    # API配置
+    # AES配置
+    AES_KEY_SIZE = 32   # AES-256
+    SALT_SIZE = 16      # 盐值长度
+    ITERATIONS = 100000  # PBKDF2迭代次数
+    
+    # API基础配置
     token = None
     headers = {
         "User-Agent": "android 1.4.71",
@@ -19,17 +31,76 @@ class api:
     base_url = "https://chat-go.jwzhd.com/v1"
 
     # --------------------------
-    # Token管理（环境变量版）
+    # 加密工具方法 (使用pycryptodome)
+    # --------------------------
+    @classmethod
+    def _get_encryption_key(cls):
+        """获取或生成加密密钥和盐值"""
+        if os.path.exists(cls.SALT_FILE):
+            with open(cls.SALT_FILE, 'rb') as f:
+                salt = f.read()
+        else:
+            salt = get_random_bytes(cls.SALT_SIZE)
+            with open(cls.SALT_FILE, 'wb') as f:
+                f.write(salt)
+        
+        # 使用固定密码+盐值生成密钥（实际项目应考虑更安全的密钥管理）
+        password = "default_password_should_be_changed".encode()
+        return PBKDF2(password, salt, dkLen=cls.AES_KEY_SIZE, count=cls.ITERATIONS)
+
+    @classmethod
+    def _encrypt_token(cls, token: str) -> str:
+        """加密令牌"""
+        cipher = AES.new(cls._get_encryption_key(), AES.MODE_GCM)
+        ciphertext, tag = cipher.encrypt_and_digest(token.encode())
+        
+        # 组合nonce(12字节) + ciphertext + tag(16字节)
+        encrypted_data = cipher.nonce + ciphertext + tag
+        return base64.b64encode(encrypted_data).decode()
+
+    @classmethod
+    def _decrypt_token(cls, encrypted_token: str) -> str:
+        """解密令牌"""
+        try:
+            encrypted_data = base64.b64decode(encrypted_token.encode())
+            nonce = encrypted_data[:12]
+            tag = encrypted_data[-16:]
+            ciphertext = encrypted_data[12:-16]
+            
+            cipher = AES.new(cls._get_encryption_key(), AES.MODE_GCM, nonce=nonce)
+            return cipher.decrypt_and_verify(ciphertext, tag).decode()
+        except (ValueError, KeyError) as e:
+            logger.error(f"令牌解密失败: {str(e)}")
+            raise ValueError("无效的加密令牌")
+
+    # --------------------------
+    # 令牌管理
     # --------------------------
     @classmethod
     def _save_token(cls, token: str):
-        """保存Token到环境变量"""
+        """安全存储令牌"""
+        # 加密存储到文件
+        encrypted = cls._encrypt_token(token)
+        with open(cls.TOKEN_FILE, 'w') as f:
+            f.write(encrypted)
+        
+        # 同时保存到环境变量
         os.environ[cls.TOKEN_ENV_VAR] = token
-        logger.info("Token已保存到环境变量")
+        logger.info("令牌已加密存储")
 
     @classmethod
     def _load_token(cls) -> str:
-        """从环境变量加载Token"""
+        """加载令牌（优先从加密文件）"""
+        # 优先尝试从加密文件加载
+        if os.path.exists(cls.TOKEN_FILE):
+            try:
+                with open(cls.TOKEN_FILE, 'r') as f:
+                    encrypted = f.read()
+                return cls._decrypt_token(encrypted)
+            except Exception as e:
+                logger.warning(f"令牌解密失败: {str(e)}，尝试从环境变量加载")
+        
+        # 其次尝试从环境变量加载
         return os.environ.get(cls.TOKEN_ENV_VAR)
 
     # --------------------------
@@ -37,15 +108,33 @@ class api:
     # --------------------------
     @classmethod
     def _make_request(cls, url, data, action_name):
-        """统一的请求处理方法"""
+        """统一请求处理"""
         try:
+            # 记录请求日志（脱敏处理）
+            safe_data = data.copy()
+            if 'password' in safe_data:
+                safe_data['password'] = '******'
+            logger.info(f"请求[{action_name}]: {url} 参数: {json.dumps(safe_data, ensure_ascii=False)}")
+            
             response = requests.post(
                 url=url,
                 headers=cls.headers,
                 json=data,
                 timeout=10
             )
+            
+            # 记录响应状态
+            logger.info(f"响应状态[{action_name}]: {response.status_code}")
+            
             response_data = response.json()
+            
+            # 记录业务响应（脱敏处理）
+            log_response = {
+                'code': response_data.get('code'),
+                'message': response_data.get('msg'),
+                'data': '...' if response_data.get('data') else None
+            }
+            logger.info(f"业务响应[{action_name}]: {json.dumps(log_response, ensure_ascii=False)}")
             
             return {
                 'success': response_data.get('code') == 1,
@@ -55,32 +144,33 @@ class api:
             }
                 
         except requests.exceptions.RequestException as e:
-            logger.error(f"{action_name}网络错误：{str(e)}")
+            logger.error(f"网络错误[{action_name}]: {str(e)}")
             return {'success': False, 'code': -2, 'message': f"网络错误: {str(e)}", 'data': None}
         except Exception as e:
-            logger.error(f"{action_name}未知错误：{str(e)}")
+            logger.error(f"未知错误[{action_name}]: {str(e)}")
             return {'success': False, 'code': -3, 'message': f"未知错误: {str(e)}", 'data': None}
 
     # --------------------------
-    # 初始化与登录
+    # 初始化与认证
     # --------------------------
     @classmethod
     def initialize(cls):
-        """初始化时尝试加载环境变量中的token"""
+        """初始化加载令牌"""
         cls.token = cls._load_token()
         if cls.token:
             cls.headers["token"] = cls.token
-            logger.info("已从环境变量加载Token")
+            logger.info("已加载本地令牌")
 
     @classmethod
     def login(cls, email, password, force=False):
         """
-        登录方法
-        :param force: 是否强制重新登录（忽略现有token）
-        :return: 统一格式的响应字典
+        用户登录
+        :param force: 是否强制重新登录
+        :return: 统一响应格式
         """
+        # 优先使用现有令牌
         if not force and cls.token:
-            return {'success': True, 'code': 1, 'message': '已使用现有Token', 'data': None}
+            return {'success': True, 'code': 1, 'message': '使用现有令牌', 'data': None}
 
         url = cls.base_url + "/user/email-login"
         data = {
@@ -90,7 +180,7 @@ class api:
             "platform": "windows"
         }
         
-        result = cls._make_request(url, data, "登录")
+        result = cls._make_request(url, data, "用户登录")
         if result['success']:
             cls.token = result['data']['token']
             cls.headers["token"] = cls.token
@@ -102,13 +192,20 @@ class api:
     # --------------------------
     @classmethod
     def ban_request(cls, user_id, group_id, time):
-        """禁言请求方法"""
+        """禁言操作"""
         allow_time = ["10", "1h", "6h", "12h", "0"]
+        time_match = {
+            "10": 600,
+            "1h": 6000,
+            "6h": 21600,
+            "12h": 43200,
+            "0": 0
+        }
         if time not in allow_time:
-            return {'success': False, 'code': -4, 'message': f"不支持的时间: {time}", 'data': None}
-        
-        url = cls.base_url + "/group/gag_member"
-        data = {"groupId": group_id, "userId": user_id, "time": time}
+            return {'success': False, 'code': -4, 'message': f"不支持的时间参数: {time}", 'data': None}
+        seconds = time_match[time]
+        url = "https://chat-go.jwzhd.com/v1/group/gag-member"
+        data = {"groupId": group_id, "userId": user_id, "gag": seconds}
         action = "取消禁言" if time == "0" else "禁言"
         return cls._make_request(url, data, action)
 
@@ -119,25 +216,25 @@ class api:
 
     @classmethod
     def unban(cls, group_id, user_id):
-        """取消禁言快捷方法"""
+        """解除禁言"""
         return cls.ban_request(user_id, group_id, "0")
 
     @classmethod
     def kick(cls, group_id, user_id):
-        """踢出成员"""
+        """移除成员"""
         url = cls.base_url + "/group/remove-member"
         data = {"groupId": group_id, "userId": user_id}
-        return cls._make_request(url, data, "踢出成员")
+        return cls._make_request(url, data, "移除成员")
 
     # --------------------------
-    # 标签管理类
+    # 标签管理
     # --------------------------
     class tag:
-        """标签管理（自动继承api的token和配置）"""
+        """标签管理"""
         
         @classmethod
         def add(cls, group_id, tag_name, color="#2196F3", desc="", sort=0):
-            """添加标签组"""
+            """创建标签"""
             url = api.base_url + "/group-tag/create"
             data = {
                 "groupId": group_id,
@@ -146,30 +243,30 @@ class api:
                 "desc": desc,
                 "sort": sort
             }
-            return api._make_request(url, data, "添加标签组")
+            return api._make_request(url, data, "创建标签")
 
         @classmethod
-        def remove(cls, tag_id):
-            """删除标签组"""
+        def rm(cls, tag_id):
+            """删除标签"""
             if not isinstance(tag_id, int):
-                return {'success': False, 'code': -4, 'message': "tag_id必须为整数", 'data': None}
+                return {'success': False, 'code': -4, 'message': "标签ID必须为整数", 'data': None}
                 
             url = api.base_url + "/group-tag/delete"
             data = {"id": tag_id}
-            return api._make_request(url, data, "删除标签组")
+            return api._make_request(url, data, "删除标签")
 
         @classmethod
         def list(cls, group_id):
-            """获取标签组列表"""
+            """获取标签列表"""
             url = api.base_url + "/group-tag/list"
             data = {"groupId": group_id}
-            return api._make_request(url, data, "获取标签组")
+            return api._make_request(url, data, "获取标签列表")
 
         @classmethod
         def edit(cls, tag_id, group_id, tag_name, color="#2196F3", desc="", sort=0):
-            """编辑标签组"""
+            """编辑标签"""
             if not isinstance(tag_id, int):
-                return {'success': False, 'code': -4, 'message': "tag_id必须为整数", 'data': None}
+                return {'success': False, 'code': -4, 'message': "标签ID必须为整数", 'data': None}
                 
             url = api.base_url + "/group-tag/edit"
             data = {
@@ -180,13 +277,13 @@ class api:
                 "desc": desc,
                 "sort": sort
             }
-            return api._make_request(url, data, "编辑标签组")
+            return api._make_request(url, data, "编辑标签")
 
         @classmethod
-        def set_user_tag(cls, user_id, tag_id):
-            """为用户设置标签"""
+        def set(cls, user_id, tag_id):
+            """设置用户标签"""
             if not isinstance(tag_id, int):
-                return {'success': False, 'code': -4, 'message': "tag_id必须为整数", 'data': None}
+                return {'success': False, 'code': -4, 'message': "标签ID必须为整数", 'data': None}
                 
             url = api.base_url + "/group-tag/relate"
             data = {
@@ -194,32 +291,72 @@ class api:
                 "tagGroupId": tag_id
             }
             return api._make_request(url, data, "设置用户标签")
+
+    # --------------------------
+    # 好友/群组操作
+    # --------------------------
     class join:
+        """加入操作"""
+        
         @classmethod
         def join_requests(cls, type, id, msg):
+            """通用加入请求"""
+            if not isinstance(id, str):
+                logger.error("ID必须为字符串")
             url = api.base_url + "/friend/apply"
             data = {
                 "chatId": id,
                 "chatType": type,
                 "remark": msg
             }
-            if type == 1:
-                title = "用户"
-            elif type == 2:
-                title = "群聊",
-            else:
-                title = "机器人"
+            title = {1: "用户", 2: "群聊", 3: "机器人"}.get(type, "未知")
             return api._make_request(url, data, f"添加{title}")
+
         @classmethod
         def user(cls, id, msg=""):
+            """添加好友"""
             return cls.join_requests(1, id, msg)
+
         @classmethod
         def group(cls, id, msg=""):
+            """加入群聊"""
             return cls.join_requests(2, id, msg)
+
         @classmethod
         def bot(cls, id, msg=""):
+            """添加机器人"""
             return cls.join_requests(3, id, msg)
-        
 
-# 初始化API模块（自动加载环境变量中的token）
+    class leave:
+        """离开操作"""
+        
+        @classmethod
+        def leave_requests(cls, type, id):
+            """通用离开请求"""
+            if not isinstance(id, str):
+                logger.error("ID必须为字符串")
+            url = api.base_url + "/friend/delete-friend"
+            data = {
+                "chatId": id,
+                "chatType": type,
+            }
+            title = {1: "用户", 2: "群聊", 3: "机器人"}.get(type, "未知")
+            return api._make_request(url, data, f"删除{title}")
+
+        @classmethod
+        def user(cls, id):
+            """删除好友"""
+            return cls.leave_requests(1, id)
+
+        @classmethod
+        def group(cls, id):
+            """退出群聊"""
+            return cls.leave_requests(2, id)
+
+        @classmethod
+        def bot(cls, id):
+            """移除机器人"""
+            return cls.leave_requests(3, id)
+
+# 初始化API模块
 api.initialize()

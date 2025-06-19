@@ -1,0 +1,10 @@
+from YhUserSDK import api
+print(api.login(email="zcsfish@qq.com", password="20100829zcs"))
+response = api.tag.add("632128613", "VIP")
+print(response)
+list = api.tag.list("632128613")
+print(list)
+api.tag.rm(1498)
+res = api.ban("632128613", "3707697", "10")
+print(res)
+api.unban("632128613", "3707697")
